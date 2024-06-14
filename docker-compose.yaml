@@ -1,6 +1,6 @@
 services:
   kiii:
-    image: ${{ secrets.DOCKER_USERNAME }}/kiii:latest
+    image: marinojak/kiii:latest
     ports:
       - "5000:5000"
     environment:
