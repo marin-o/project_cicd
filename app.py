@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify, render_template
 from models import db, Artist, Album, Song
 from config import Config
@@ -50,4 +51,4 @@ def songs():
     return render_template('songs.html', songs=songs, artists=artists, albums=albums)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=os.getenv('FLASK_RUN_HOST'), port=os.getenv('FLASK_RUN_PORT'))
