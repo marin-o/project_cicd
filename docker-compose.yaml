@@ -1,31 +1,23 @@
 services:
-  kiiiapp:
-    build: .
-    volumes:
-      - .:/app
+  kiii:
+    image: ${{ DOCKER_USERNAME }}/kiii:latest
     ports:
-      - 5000:5000
+      - "5000:5000"
     environment:
       FLASK_APP: app.py
       FLASK_RUN_HOST: 0.0.0.0
       FLASK_ENV: development
       FLASK_DEBUG: 1
-      DATABASE_URL: postgresql://music_user:postgres@db:5432/music_publisher  # Update with your actual database credentials
-    image: kiiiapp:latest
-    container_name: kiii_project_container
-    command: bash -c "python init_db.py && flask run"
+      DATABASE_URL: postgresql://music_user:postgres@db:5432/music_publisher
     depends_on:
       - db
+    command: bash -c "python init_db.py && flask run --host=0.0.0.0"
 
   db:
     image: postgres:16
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: music_publisher
       POSTGRES_USER: music_user
       POSTGRES_PASSWORD: postgres
-    container_name: kiii_db_container
-
-volumes:
-  db_data:
