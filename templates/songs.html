@@ -15,9 +15,8 @@
         {% endfor %}
     </select>
 
-    <label for="album_id">Album (optional):</label>
+    <label for="album_id">Album:</label>
     <select id="album_id" name="album_id">
-        <option value="">-- None --</option>
         {% for album in albums %}
         <option value="{{ album.id }}">{{ album.title }}</option>
         {% endfor %}
