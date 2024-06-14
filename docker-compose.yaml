@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   kiii:
     image: marinojak/kiii:latest
@@ -10,7 +12,8 @@ services:
       FLASK_DEBUG: 1
       DATABASE_URL: postgresql://music_user:postgres@db:5432/music_publisher
     depends_on:
-      - db
+      db:
+        condition: service_healthy  # Wait for the db service to be healthy
     command: bash -c "python init_db.py && flask run --host=0.0.0.0"
 
   db:
@@ -21,3 +24,11 @@ services:
       POSTGRES_DB: music_publisher
       POSTGRES_USER: music_user
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U music_user"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+volumes:
+  db_data:

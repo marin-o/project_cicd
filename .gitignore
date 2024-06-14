@@ -129,6 +129,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+data/
+docker-compose-local.yaml
 
 # Spyder project settings
 .spyderproject
