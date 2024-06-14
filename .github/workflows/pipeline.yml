@@ -27,9 +27,9 @@ jobs:
 
       - name: Start PostgreSQL and initialize database
         run: |
-          docker-compose -f docker-compose.yml up -d db
+          docker-compose -f docker-compose.yaml up -d db
           sleep 10 # wait for the database to start
-          docker-compose -f docker-compose.yml run kiii bash -c "python init_db.py"
+          docker-compose -f docker-compose.yaml run kiii bash -c "python init_db.py"
 
       - name: Clean up PostgreSQL
-        run: docker-compose -f docker-compose.yml down
+        run: docker-compose -f docker-compose.yaml down
