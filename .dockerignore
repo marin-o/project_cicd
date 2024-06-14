@@ -1,0 +1,7 @@
+data/
+venv/
+__pycache__/
+.github/
+docker-compose-local.yaml
+docker-compose.yaml
+Dockerfile
