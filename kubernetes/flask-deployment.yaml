@@ -1,37 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-app
+  name: kiii-app-deploy
   namespace: kiii
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-app
+      app: kiii-app
   template:
     metadata:
       labels:
-        app: flask-app
+        app: kiii-app
     spec:
+      initContainers:
+      - name: init-db
+        image: marinojak/kiii:latest
+        command: ["python", "init_db.py"]
+        envFrom:
+          - configMapRef:
+              name: kiii-app-configmap
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: database-secret
+                key: database-url
       containers:
-        - name: flask-app
+        - name: kiii-app
           image: marinojak/kiii:latest  
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
           ports:
             - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: kiii-app-configmap
           env:
-            - name: FLASK_APP
-              value: app.py
-            - name: FLASK_RUN_HOST
-              value: 0.0.0.0
-            - name: FLASK_RUN_PORT
-              value: "5000"
-            - name: FLASK_ENV
-              value: development
-            - name: FLASK_DEBUG
-              value: "1"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: database-secret
                   key: database-url
-
