@@ -9,7 +9,7 @@
 <body>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <h1 class="mb-4">Music Publisher</h1>
-    
+    {% block navbar %}
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="/artists">Artists</a>
@@ -21,6 +21,7 @@
             <a class="nav-link" href="/songs">Songs</a>
         </li>
     </ul>
+    {% endblock %}
 
     {% block content %}
     {% endblock %}
