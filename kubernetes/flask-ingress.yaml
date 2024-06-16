@@ -1,11 +1,25 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-kiii-prefix
+  namespace: kiii
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /kiii
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kiii-app-ingress
   namespace: kiii
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    traefik.ingress.kubernetes.io/router.middlewares: kiii-strip-kiii-prefix@kubernetescrd
 spec:
   rules:
-    - host: kiii.domain.com
+    - host: kiii.domain.com  # Host-based rule
       http:
         paths:
           - path: /
@@ -14,4 +28,13 @@ spec:
               service:
                 name: kiii-app-service
                 port:
-                  number: 80
+                  number: 5000
+    - http:
+        paths:
+          - path: /kiii
+            pathType: Prefix
+            backend:
+              service:
+                name: kiii-app-service
+                port:
+                  number: 5000

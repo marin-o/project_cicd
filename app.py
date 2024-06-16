@@ -51,4 +51,4 @@ def songs():
     return render_template('songs.html', songs=songs, artists=artists, albums=albums)
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('FLASK_RUN_HOST'), port=os.getenv('FLASK_RUN_PORT', 5000))
+    app.run(host=os.getenv('FLASK_RUN_HOST', '0.0.0.0'), port=int(os.getenv('FLASK_RUN_PORT', 5000)))
