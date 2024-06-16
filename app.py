@@ -58,6 +58,7 @@ def albums():
 @app.route('/albums/<int:album_id>', methods=['GET', 'POST'])
 def update_album(album_id):
     album = Album.query.get_or_404(album_id)
+    artists = Artist.query.all()  
     
     if request.method == 'POST':
         album.title = request.form['title']
@@ -92,6 +93,8 @@ def songs():
 @app.route('/songs/<int:song_id>', methods=['GET', 'POST'])
 def update_song(song_id):
     song = Song.query.get_or_404(song_id)
+    artists = Artist.query.all()  
+    albums = Album.query.all()    
     
     if request.method == 'POST':
         song.title = request.form['title']

@@ -19,7 +19,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: kiii-strip-kiii-prefix@kubernetescrd
 spec:
   rules:
-    - host: kiii.domain.com  # Host-based rule
+    - host: kiii.domain.com
       http:
         paths:
           - path: /
