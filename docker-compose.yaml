@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   kiii:
     image: marinojak/kiii:latest
@@ -13,7 +11,7 @@ services:
       DATABASE_URL: postgresql://music_user:postgres@db:5432/music_publisher
     depends_on:
       db:
-        condition: service_healthy  # Wait for the db service to be healthy
+        condition: service_healthy  
     command: bash -c "python init_db.py && flask run --host=0.0.0.0"
 
   db:
