@@ -1,22 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Artists - Flask App{% endblock %}
+{% block title %}Artists{% endblock %}
 
 {% block content %}
 
-
-<form action="/artists" method="post">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name">
-    <button type="submit">Add Artist</button>
+<form action="/artists" method="post" class="my-4">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" name="name" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Artist</button>
 </form>
 
 <h1>Artists</h1>
 
-<ul>
+<ul class="list-group">
     {% for artist in artists %}
-    <li>{{ artist.name }} <a href="/artists/{{ artist.id }}">Edit</a> | <form style="display: inline;" action="/artists/{{ artist.id }}/delete" method="post"><button type="submit">Delete</button></form></li>
-    {% endfor %} 
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ artist.name }}
+        <div>
+            <a href="/artists/{{ artist.id }}" class="btn btn-sm btn-secondary me-2">Edit</a>
+            <form style="display: inline;" action="/artists/{{ artist.id }}/delete" method="post">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}

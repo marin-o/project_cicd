@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Music Publisher</title>
-</head>
-<body>
-    <h1>Time to publish some music!</h1>
-    <ul>
-        <li><a href="/artists">Artists</a></li>
-        <li><a href="/albums">Albums</a></li>
-        <li><a href="/songs">Songs</a></li>
+{% extends "base.html" %}
+
+{% block title %}Home - Music Publisher{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Time to publish some music!</h2>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/artists">Artists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/albums">Albums</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/songs">Songs</a>
+        </li>
     </ul>
-</body>
-</html>
+{% endblock %}
