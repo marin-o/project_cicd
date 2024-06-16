@@ -18,7 +18,6 @@
 
     <label for="album_id">Album:</label>
     <select id="album_id" name="album_id">
-        <option value="">No Album</option>
         {% for album in albums %}
         <option value="{{ album.id }}" {% if album.id == song.album_id %}selected{% endif %}>{{ album.title }}</option>
         {% endfor %}
