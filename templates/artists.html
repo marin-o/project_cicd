@@ -15,8 +15,8 @@
 
 <ul>
     {% for artist in artists %}
-    <li>{{ artist.name }} <a href="/artists/{{ artist.id }}">Edit</a> | <form action="/artists/{{ artist.id }}/delete" method="post"><button type="submit">Delete</button></form></li>
-    {% endfor %}
+    <li>{{ artist.name }} <a href="/artists/{{ artist.id }}">Edit</a> | <form style="display: inline;" action="/artists/{{ artist.id }}/delete" method="post"><button type="submit">Delete</button></form></li>
+    {% endfor %} 
 </ul>
 
 {% endblock %}

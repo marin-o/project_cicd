@@ -22,7 +22,7 @@
 
 <ul>
     {% for album in albums %}
-    <li>{{ album.title }} by {{ album.artist.name }} <a href="/albums/{{ album.id }}">Edit</a> | <form action="/albums/{{ album.id }}/delete" method="post"><button type="submit">Delete</button></form></li>
+    <li>{{ album.title }} by {{ album.artist.name }} <a href="/albums/{{ album.id }}">Edit</a> | <form style="display: inline;" action="/albums/{{ album.id }}/delete" method="post"><button type="submit">Delete</button></form></li>
     {% endfor %}
 </ul>
 
