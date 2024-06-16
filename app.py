@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from models import db, Artist, Album, Song
 from config import Config
 
@@ -23,6 +23,25 @@ def artists():
     artists = Artist.query.all()
     return render_template('artists.html', artists=artists)
 
+@app.route('/artists/<int:artist_id>', methods=['GET', 'POST'])
+def update_artist(artist_id):
+    artist = Artist.query.get_or_404(artist_id)
+    
+    if request.method == 'POST':
+        artist.name = request.form['name']
+        db.session.commit()
+        return redirect('/artists')
+    
+    return render_template('update_artist.html', artist=artist)
+
+@app.route('/artists/<int:artist_id>/delete', methods=['POST'])
+def delete_artist(artist_id):
+    artist = Artist.query.get_or_404(artist_id)
+    db.session.delete(artist)
+    db.session.commit()
+    return redirect('/artists')
+
+
 @app.route('/albums', methods=['POST', 'GET'])
 def albums():
     if request.method == 'POST':
@@ -35,6 +54,26 @@ def albums():
     albums = Album.query.all()
     artists = Artist.query.all()  
     return render_template('albums.html', albums=albums, artists=artists)
+
+@app.route('/albums/<int:album_id>', methods=['GET', 'POST'])
+def update_album(album_id):
+    album = Album.query.get_or_404(album_id)
+    
+    if request.method == 'POST':
+        album.title = request.form['title']
+        album.artist_id = request.form['artist_id']
+        db.session.commit()
+        return redirect('/albums')
+    
+    return render_template('update_album.html', album=album, artists=artists)
+
+@app.route('/albums/<int:album_id>/delete', methods=['POST'])
+def delete_album(album_id):
+    album = Album.query.get_or_404(album_id)
+    db.session.delete(album)
+    db.session.commit()
+    return redirect('/albums')
+
 
 @app.route('/songs', methods=['POST', 'GET'])
 def songs():
@@ -49,6 +88,27 @@ def songs():
     artists = Artist.query.all()  
     albums = Album.query.all()    
     return render_template('songs.html', songs=songs, artists=artists, albums=albums)
+
+@app.route('/songs/<int:song_id>', methods=['GET', 'POST'])
+def update_song(song_id):
+    song = Song.query.get_or_404(song_id)
+    
+    if request.method == 'POST':
+        song.title = request.form['title']
+        song.artist_id = request.form['artist_id']
+        song.album_id = request.form.get('album_id')
+        db.session.commit()
+        return redirect('/songs')
+    
+    return render_template('update_song.html', song=song, artists=artists, albums=albums)
+
+@app.route('/songs/<int:song_id>/delete', methods=['POST'])
+def delete_song(song_id):
+    song = Song.query.get_or_404(song_id)
+    db.session.delete(song)
+    db.session.commit()
+    return redirect('/songs')
+
 
 if __name__ == '__main__':
     app.run(host=os.getenv('FLASK_RUN_HOST', '0.0.0.0'), port=int(os.getenv('FLASK_RUN_PORT', 5000)))

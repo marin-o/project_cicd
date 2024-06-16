@@ -30,8 +30,9 @@
 
 <ul>
     {% for song in songs %}
-    <li>{{ song.title }} by {{ song.artist.name }} {% if song.album %} (Album: {{ song.album.title }}) {% endif %}</li>
+    <li>{{ song.title }} by {{ song.artist.name }} {% if song.album %} (Album: {{ song.album.title }}) {% endif %} <a href="/songs/{{ song.id }}">Edit</a> | <form action="/songs/{{ song.id }}/delete" method="post"><button type="submit">Delete</button></form></li>
     {% endfor %}
 </ul>
+
 
 {% endblock %}
