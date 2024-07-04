@@ -24,11 +24,3 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest .
           docker push ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest
 
-      - name: Start PostgreSQL and initialize database
-        run: |
-          docker-compose -f docker-compose.yaml up -d db
-          sleep 10 # wait for the database to start
-          docker-compose -f docker-compose.yaml run kiii bash -c "python init_db.py"
-
-      - name: Clean up PostgreSQL
-        run: docker-compose -f docker-compose.yaml down
