@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   kiii:
-    image: marinojak/kiii:latest
+    image: marinojak/kiii:mongolatest
     ports:
       - "5000:5000"
     environment:
@@ -8,22 +10,18 @@ services:
       FLASK_RUN_HOST: 0.0.0.0
       FLASK_ENV: development
       FLASK_DEBUG: 1
-      DATABASE_URL: postgresql://music_user:postgres@db:5432/music_publisher
+      MONGO_URI: mongodb://mongo:27017/music_publisher
     depends_on:
-      db:
-        condition: service_healthy  
-    command: bash -c "python init_db.py && flask run --host=0.0.0.0"
+      mongo:
+        condition: service_healthy
+    command: bash -c "flask run --host=0.0.0.0"
 
-  db:
-    image: postgres:16
+  mongo:
+    image: mongo:latest
     volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: music_publisher
-      POSTGRES_USER: music_user
-      POSTGRES_PASSWORD: postgres
+      - ./data/db:/data/db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U music_user"]
+      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ connectionStatus: 1 })'"]
       interval: 10s
       retries: 5
       timeout: 5s
