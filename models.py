@@ -1,21 +1,13 @@
-from flask_sqlalchemy import SQLAlchemy
+from mongoengine import Document, fields
 
-db = SQLAlchemy()
+class Artist(Document):
+    name = fields.StringField(required=True)
 
-class Artist(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    albums = db.relationship('Album', backref='artist', lazy=True)
-    songs = db.relationship('Song', backref='artist', lazy=True)
+class Album(Document):
+    title = fields.StringField(required=True)
+    artist_id = fields.ReferenceField(Artist, required=True)
 
-class Album(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
-    songs = db.relationship('Song', backref='album', lazy=True)
-
-class Song(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
-    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=True)
+class Song(Document):
+    title = fields.StringField(required=True)
+    artist_id = fields.ReferenceField(Artist, required=True)
+    album_id = fields.ReferenceField(Album, required=False)

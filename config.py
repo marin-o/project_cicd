@@ -1,5 +1,4 @@
 import os
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'postgresql://music_user:postgres@localhost/music_publisher')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/music_publisher')

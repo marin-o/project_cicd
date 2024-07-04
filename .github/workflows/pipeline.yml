@@ -22,8 +22,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/kiii:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest
 
       - name: Start PostgreSQL and initialize database
         run: |

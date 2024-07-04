@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Update Artist</h1>
 
-<form action="/artists/{{ artist.id }}" method="post" class="my-4">
+<form action="/artists/{{ artist._id }}" method="post" class="my-4">
     <div class="mb-3">
         <label for="name" class="form-label">Name:</label>
         <input type="text" id="name" name="name" value="{{ artist.name }}" class="form-control">
