@@ -13,22 +13,9 @@ spec:
       labels:
         app: kiii-app
     spec:
-      initContainers:
-      - name: init-db
-        image: marinojak/kiii:latest
-        command: ["python", "init_db.py"]
-        envFrom:
-          - configMapRef:
-              name: kiii-app-configmap
-        env:
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: database-url
       containers:
         - name: kiii-app
-          image: marinojak/kiii:latest  
+          image: marinojak/kiii:mongolatest  
           resources:
             limits:
               memory: "512Mi"
@@ -38,9 +25,3 @@ spec:
           envFrom:
             - configMapRef:
                 name: kiii-app-configmap
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: database-secret
-                  key: database-url
