@@ -10,3 +10,4 @@ data:
   FLASK_ENV: development
   FLASK_DEBUG: "1"
   MONGO_URI: "mongodb://mongo-0.mongo-headless.kiii.svc.cluster.local:27017,mongo-1.mongo-headless.kiii.svc.cluster.local:27017,mongo-2.mongo-headless.kiii.svc.cluster.local:27017/music_publisher?replicaSet=rs0"
+  
