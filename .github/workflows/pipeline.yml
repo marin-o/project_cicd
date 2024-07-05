@@ -3,7 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - mongobranch
+      - main
+      - master
 
 jobs:
   build-and-deploy:
