@@ -25,3 +25,12 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest .
           docker push ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest
 
+      - name: Notify on success
+        if: success()
+        run: |
+          echo "Build and push succeeded!" | mail -s "Build Success" ${{ secrets.ACTIONS_EMAIL }}
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Build and push failed!" | mail -s "Build Failure" ${{ secrets.ACTIONS_EMAIL }}
