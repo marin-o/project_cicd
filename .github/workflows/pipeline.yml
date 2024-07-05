@@ -25,12 +25,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest .
           docker push ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest
 
-      - name: Health Check
-        run: |
-          echo "Performing health check..."
-          # Replace this with actual health check command if applicable
-          curl --silent --fail http://localhost:your-app-port/health || exit 1
-
       - name: Notify on success
         if: success()
         uses: dawidd6/action-send-mail@v3
