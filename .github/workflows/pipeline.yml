@@ -25,12 +25,34 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest .
           docker push ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest
 
+      - name: Health Check
+        run: |
+          echo "Performing health check..."
+          # Replace this with actual health check command if applicable
+          curl --silent --fail http://localhost:your-app-port/health || exit 1
+
       - name: Notify on success
         if: success()
-        run: |
-          echo "Build and push succeeded!" | mail -s "Build Success" ${{ secrets.ACTIONS_EMAIL }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.SEND_EMAIL }}
+          password: ${{ secrets.SEND_PASSWORD }}
+          subject: "Build Success"
+          body: "Build and push succeeded!"
+          to: ${{ secrets.RECEIVE_EMAIL }}
+          from: ${{ secrets.SEND_EMAIL }}
 
       - name: Notify on failure
         if: failure()
-        run: |
-          echo "Build and push failed!" | mail -s "Build Failure" ${{ secrets.ACTIONS_EMAIL }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.SEND_EMAIL }}
+          password: ${{ secrets.SEND_PASSWORD }}
+          subject: "Build Failure"
+          body: "Build and push failed!"
+          to: ${{ secrets.RECEIVE_EMAIL }}
+          from: ${{ secrets.SEND_EMAIL }}
