@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: kiii-app
-          image: marinojak/kiii:46
+          image: marinojak/kiii:47
           resources:
             limits:
               memory: "512Mi"
