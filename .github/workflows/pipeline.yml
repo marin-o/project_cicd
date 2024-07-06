@@ -28,11 +28,12 @@ jobs:
       - name: Update Kubernetes Deployment
         run: |
           sed -i "s|image: .*|image: ${{secrets.DOCKER_USERNAME}}/kiii:${{ github.run_number }}|" kubernetes/flask-deployment.yaml
+          sed -i "s|image: .*|image: ${{secrets.DOCKER_USERNAME}}/kiii:${{ github.run_number }}|" docker-compose.yaml
           git config --global user.email "marin-o.actions@github.com"
           git config --global user.name "marin-o actions"
           git add kubernetes/flask-deployment.yaml
           PREVIOUS_COMMIT=$(git log -1 --skip 1 --pretty=%B)
-          git commit -m "Update image in deployment to version tag ${{ github.run_number }}: ${PREVIOUS_COMMIT} [skip ci]"
+          git commit -m "Update image version tag to ${{ github.run_number }}: ${PREVIOUS_COMMIT} [skip ci]"
           git push
 
           sleep 10
