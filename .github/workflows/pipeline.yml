@@ -34,6 +34,8 @@ jobs:
           git add kubernetes/flask-deployment.yaml
           git add docker-compose.yaml
           PREVIOUS_COMMIT=$(git log -1 --skip 1 --pretty=%B)
+          echo "Previous commit message: ${PREVIOUS_COMMIT}"
+          echo 
           git commit -m "Update image version tag to ${{ github.run_number }}: ${PREVIOUS_COMMIT} [skip ci]"
           git push
 
