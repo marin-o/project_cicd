@@ -22,8 +22,19 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/kiii:mongolatest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/kiii:${{ github.run_number }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/kiii:${{ github.run_number }}
+
+      - name: Update Kubernetes Deployment
+        run: |
+          sed -i "s|image: .*|image: ${DOCKER_USERNAME}/kiii:${{ github.run_number }}|" kubernetes/flask-deployment.yaml
+          git config --global user.email "marin-o.actions@github.com"
+          git config --global user.name "marin-o actions"
+          git add kubernetes/flask-deployment.yaml
+          git commit -m "Update deployment to version ${DOCKER_USERNAME}/kiii:${{ github.run_number }} [skip ci]"
+          git push
+
+          sleep 10
 
       - name: Notify on success
         if: success()
@@ -34,7 +45,7 @@ jobs:
           username: ${{ secrets.SEND_EMAIL }}
           password: ${{ secrets.SEND_PASSWORD }}
           subject: "Build Success"
-          body: "Build and push succeeded!"
+          body: "Build and push succeeded for version ${{ github.run_number }}!"
           to: ${{ secrets.RECEIVE_EMAIL }}
           from: ${{ secrets.SEND_EMAIL }}
 
@@ -47,6 +58,6 @@ jobs:
           username: ${{ secrets.SEND_EMAIL }}
           password: ${{ secrets.SEND_PASSWORD }}
           subject: "Build Failure"
-          body: "Build and push failed!"
+          body: "Build and push failed for version ${{ github.run_number }}!"
           to: ${{ secrets.RECEIVE_EMAIL }}
           from: ${{ secrets.SEND_EMAIL }}
