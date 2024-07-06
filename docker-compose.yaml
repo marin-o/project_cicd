@@ -1,6 +1,6 @@
 services:
   kiii:
-    image: marinojak/kiii:mongolatest
+    image: marinojak/kiii:2
     ports:
       - "5000:5000"
     environment:
@@ -13,7 +13,7 @@ services:
     
 
   mongo:
-    image: mongo:latest
+    image: marinojak/kiii:2
     volumes:
       - ./data/db:/data/db
     healthcheck:
