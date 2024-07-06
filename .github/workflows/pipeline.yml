@@ -32,7 +32,7 @@ jobs:
           git config --global user.name "marin-o actions"
           git add kubernetes/flask-deployment.yaml
           git commit -m "Update deployment to version ${DOCKER_USERNAME}/kiii:${{ github.run_number }} [skip ci]"
-          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
 
           sleep 10
 
