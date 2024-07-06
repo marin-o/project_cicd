@@ -31,7 +31,8 @@ jobs:
           git config --global user.email "marin-o.actions@github.com"
           git config --global user.name "marin-o actions"
           git add kubernetes/flask-deployment.yaml
-          git commit -m "Update image in deployment to version tag ${{ github.run_number }} [skip ci]"
+          PREVIOUS_COMMIT=$(git log -1 --skip 1 --pretty=%B)
+          git commit -m "Update image in deployment to version tag ${{ github.run_number }}: ${PREVIOUS_COMMIT} [skip ci]"
           git push
 
           sleep 10
