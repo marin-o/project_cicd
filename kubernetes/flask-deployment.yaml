@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: kiii-app
-          image: marinojak/kiii:mongolatest  
+          image: /kiii:44
           resources:
             limits:
               memory: "512Mi"
