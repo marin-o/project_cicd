@@ -32,7 +32,7 @@ jobs:
           git config --global user.name "marin-o actions"
           git add kubernetes/flask-deployment.yaml
           git commit -m "Update deployment to version ${DOCKER_USERNAME}/kiii:${{ github.run_number }} [skip ci]"
-          git push
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
 
           sleep 10
 
@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.SEND_EMAIL }}
           password: ${{ secrets.SEND_PASSWORD }}
           subject: "Build Success"
-          body: "Build and push succeeded for version ${{ github.run_number }}!"
+          body: "Build and push succeeded!"
           to: ${{ secrets.RECEIVE_EMAIL }}
           from: ${{ secrets.SEND_EMAIL }}
 
@@ -58,6 +58,6 @@ jobs:
           username: ${{ secrets.SEND_EMAIL }}
           password: ${{ secrets.SEND_PASSWORD }}
           subject: "Build Failure"
-          body: "Build and push failed for version ${{ github.run_number }}!"
+          body: "Build and push failed!"
           to: ${{ secrets.RECEIVE_EMAIL }}
           from: ${{ secrets.SEND_EMAIL }}
