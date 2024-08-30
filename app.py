@@ -11,10 +11,12 @@ mongo = PyMongo(app)
 db = mongo.db
 
 @app.route('/')
+@app.route('/kiii/')
 def index():
     return render_template('index.html')
 
 @app.route('/artists', methods=['POST', 'GET'])
+@app.route('/kiii/artists', methods=['POST', 'GET'])
 def artists():
     if request.method == 'POST':
         data = request.form
@@ -25,6 +27,7 @@ def artists():
     return render_template('artists.html', artists=artists)
 
 @app.route('/artists/<string:artist_id>', methods=['GET', 'POST'])
+@app.route('/kiii/artists/<string:artist_id>', methods=['GET', 'POST'])
 def update_artist(artist_id):
     artist = db.artists.find_one_or_404({'_id': ObjectId(artist_id)})
     
@@ -35,12 +38,14 @@ def update_artist(artist_id):
     return render_template('update_artist.html', artist=artist)
 
 @app.route('/artists/<string:artist_id>/delete', methods=['POST'])
+@app.route('/kiii/artists/<string:artist_id>/delete', methods=['POST'])
 def delete_artist(artist_id):
     db.artists.delete_one({'_id': ObjectId(artist_id)})
     return redirect('/artists')
 
 
 @app.route('/albums', methods=['POST', 'GET'])
+@app.route('/kiii/albums', methods=['POST', 'GET'])
 def albums():
     if request.method == 'POST':
         data = request.form
@@ -52,6 +57,7 @@ def albums():
     return render_template('albums.html', albums=albums, artists=artists, db=db)
 
 @app.route('/albums/<string:album_id>', methods=['GET', 'POST'])
+@app.route('/kiii/albums/<string:album_id>', methods=['GET', 'POST'])
 def update_album(album_id):
     album = db.albums.find_one_or_404({'_id': ObjectId(album_id)})
     artists = db.artists.find()  
@@ -63,12 +69,14 @@ def update_album(album_id):
     return render_template('update_album.html', album=album, artists=artists)
 
 @app.route('/albums/<string:album_id>/delete', methods=['POST'])
+@app.route('/kiii/albums/<string:album_id>/delete', methods=['POST'])
 def delete_album(album_id):
     db.albums.delete_one({'_id': ObjectId(album_id)})
     return redirect('/albums')
 
 
 @app.route('/songs', methods=['POST', 'GET'])
+@app.route('/kiii/songs', methods=['POST', 'GET'])
 def songs():
     if request.method == 'POST':
         data = request.form
@@ -81,6 +89,7 @@ def songs():
     return render_template('songs.html', songs=songs, artists=artists, albums=albums, db=db)
 
 @app.route('/songs/<string:song_id>', methods=['GET', 'POST'])
+@app.route('/kiii/songs/<string:song_id>', methods=['GET', 'POST'])
 def update_song(song_id):
     song = db.songs.find_one_or_404({'_id': ObjectId(song_id)})
     artists = db.artists.find()  
@@ -93,6 +102,7 @@ def update_song(song_id):
     return render_template('update_song.html', song=song, artists=artists, albums=albums)
 
 @app.route('/songs/<string:song_id>/delete', methods=['POST'])
+@app.route('/kiii/songs/<string:song_id>/delete', methods=['POST'])
 def delete_song(song_id):
     db.songs.delete_one({'_id': ObjectId(song_id)})
     return redirect('/songs')
