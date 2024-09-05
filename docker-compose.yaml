@@ -13,7 +13,7 @@ services:
     
 
   mongo:
-    image: marinojak/kiii:56
+    image: mongo:latest
     volumes:
       - ./data/db:/data/db
     healthcheck:
